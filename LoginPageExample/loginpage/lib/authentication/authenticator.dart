@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 class Authenticator{
 
@@ -19,13 +20,15 @@ class Authenticator{
     }
   }
 
-  void signinUser(String email, String password){
+  Future<String> signinUser(String email, String password) async{
 
     try{
-      firebaseInstance.signInWithEmailAndPassword(email: email, password: password);
+      await firebaseInstance.signInWithEmailAndPassword(email: email, password: password);
     }
     on FirebaseAuthException catch(e){
-      print(e.message);
+      return e.code;
     }
+
+    return "success";
   }
 }

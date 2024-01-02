@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:loginpage/firebase_options.dart';
 import 'package:loginpage/router/router.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:loginpage/shared/loading.dart';
+import 'package:loginpage/shared/error.dart';
 
 Future<void> main() async{
 
@@ -17,16 +17,13 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home:  LoadingPage(),
+    return MaterialApp.router(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+      ),
+      routerConfig: AppRouter().router,
     );
-    // return MaterialApp.router(
-    //   title: 'Flutter Demo',
-    //   theme: ThemeData(
-    //     colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-    //     useMaterial3: true,
-    //   ),
-    //   routerConfig: AppRouter().router,
-    // );
   }
 }
