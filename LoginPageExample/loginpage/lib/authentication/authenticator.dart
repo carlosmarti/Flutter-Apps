@@ -8,16 +8,18 @@ class Authenticator{
 
   Authenticator();
 
-  void createUser(String email, String password){
+  Future<String> createUser(String email, String password) async{
 
     try{
-      firebaseInstance.createUserWithEmailAndPassword(
+      await firebaseInstance.createUserWithEmailAndPassword(
         email: email,
         password: password);
     }
     on FirebaseAuthException catch(e){
-      print(e.message);
+      return e.code;
     }
+
+    return 'success';
   }
 
   Future<String> signinUser(String email, String password) async{
@@ -31,4 +33,15 @@ class Authenticator{
 
     return "success";
   }
+
+  Future<void> signUserOut() async{
+    try{
+      await firebaseInstance.signOut();
+    }
+    on FirebaseAuthException catch (e){
+      print(e.code);
+    }
+  }
+
+  
 }

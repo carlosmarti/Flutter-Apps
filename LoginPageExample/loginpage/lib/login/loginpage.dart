@@ -129,7 +129,6 @@ class _LoginPageState extends State<LoginPage> {
                           else{
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Please use a Yahoo, Google, or Outlook email!')));
                           }
-                          
                         }
                       },
                       style: ButtonStyle(

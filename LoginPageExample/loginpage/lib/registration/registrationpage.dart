@@ -16,9 +16,26 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
   final _formstate = GlobalKey<FormState>();
 
-  void registerUser(String email, String password){
+  late String email;
+  late String password;
 
-    Authenticator().createUser(email, password);
+  Future<void> registerUser(String email, String password) async{
+
+    String authMessage = await Authenticator().createUser(email, password);
+
+    if(authMessage != 'success'){
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(authMessage)));
+    }
+  }
+
+  bool checkEmailCorrectness(String em){
+
+    final emailSplit = em.split('@');
+
+    if(emailSplit[1] == 'yahoo.com' || emailSplit[1] == 'gmail.com' || emailSplit[1] == 'outlook.com'){
+      return true;
+    }
+    return false;
   }
 
   @override
@@ -37,33 +54,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
             child: Column(
               children: [
                 TextFormField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: "First Name"
-                  ),
-                  validator: (value){
-                    if(value!.isEmpty || value == null){
-                      return 'Please enter a value';
-                    }
-                    return null;
-                  },
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 10, bottom: 10),
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: "Last Name"
-                    ),
-                    validator: (value){
-                      if(value!.isEmpty || value == null){
-                        return 'Please enter a value';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-                TextFormField(
+                  onSaved: (newvalue) => email = newvalue.toString(),
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: "Email"
@@ -76,9 +67,40 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   },
                 ),
                 Padding(
+                  padding: const EdgeInsets.only(top: 10, bottom: 10),
+                  child: TextFormField(
+                    obscureText: true,
+                    onSaved: (newValue) => password = newValue.toString(),
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: "Password"
+                    ),
+                    validator: (value){
+                      if(value!.isEmpty || value == null){
+                        return 'Please enter a value';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+                Padding(
                   padding: const EdgeInsets.only(top: 10),
                   child: ElevatedButton(
-                    onPressed: (){ context.go(RouterConstants().loginpage); },
+                    onPressed: (){ 
+
+                      if(_formstate.currentState!.validate()){
+
+                        _formstate.currentState!.save();
+
+                        if(checkEmailCorrectness(email)){
+                          registerUser(email, password);
+                        }
+                        else{
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Please use an email from yahoo, gmail, or outlook!')));
+                        }
+                      }
+                      
+                    },
                     style: ButtonStyle(backgroundColor: MaterialStatePropertyAll<Color>(Colors.lightBlue)),
                     child: Text('Register', style: TextStyle(color: Colors.white),)
                   ),
