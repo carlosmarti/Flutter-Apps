@@ -1,6 +1,7 @@
 import 'package:weather/modal/weather.dart';
 import 'package:weather/repository/weatherrepository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:weather/weather_cards/weathercards.dart';
 
 part 'riverpodservice.g.dart';
 
@@ -13,9 +14,12 @@ WeatherRepository weatherRepository(WeatherRepositoryRef ref){
 }
 
 @riverpod
-Future<Weather> weatherFuture(WeatherFutureRef ref, String cityName, String stateCode) async{
+Future<Weather> weatherFuture(WeatherFutureRef ref, String cityName) async{
 
   final weatherRepository = ref.watch(weatherRepositoryProvider);
 
-  return await weatherRepository.getWeather(cityName, stateCode);
+  return await weatherRepository.getWeather(cityName);
 }
+
+@riverpod
+List<WeatherCard> getWeatherCards(GetWeatherCardsRef ref) => <WeatherCard>[];

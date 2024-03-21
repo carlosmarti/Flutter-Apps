@@ -22,7 +22,7 @@ final weatherRepositoryProvider =
 );
 
 typedef WeatherRepositoryRef = AutoDisposeProviderRef<WeatherRepository>;
-String _$weatherFutureHash() => r'bb0ff1d1e757294b5cf122aef2bd33589f3c4b36';
+String _$weatherFutureHash() => r'6a4275464e56c2c5a0a8d4e5ab991eae95ac6dfe';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -57,11 +57,9 @@ class WeatherFutureFamily extends Family<AsyncValue<Weather>> {
   /// See also [weatherFuture].
   WeatherFutureProvider call(
     String cityName,
-    String stateCode,
   ) {
     return WeatherFutureProvider(
       cityName,
-      stateCode,
     );
   }
 
@@ -71,7 +69,6 @@ class WeatherFutureFamily extends Family<AsyncValue<Weather>> {
   ) {
     return call(
       provider.cityName,
-      provider.stateCode,
     );
   }
 
@@ -95,12 +92,10 @@ class WeatherFutureProvider extends AutoDisposeFutureProvider<Weather> {
   /// See also [weatherFuture].
   WeatherFutureProvider(
     String cityName,
-    String stateCode,
   ) : this._internal(
           (ref) => weatherFuture(
             ref as WeatherFutureRef,
             cityName,
-            stateCode,
           ),
           from: weatherFutureProvider,
           name: r'weatherFutureProvider',
@@ -112,7 +107,6 @@ class WeatherFutureProvider extends AutoDisposeFutureProvider<Weather> {
           allTransitiveDependencies:
               WeatherFutureFamily._allTransitiveDependencies,
           cityName: cityName,
-          stateCode: stateCode,
         );
 
   WeatherFutureProvider._internal(
@@ -123,11 +117,9 @@ class WeatherFutureProvider extends AutoDisposeFutureProvider<Weather> {
     required super.debugGetCreateSourceHash,
     required super.from,
     required this.cityName,
-    required this.stateCode,
   }) : super.internal();
 
   final String cityName;
-  final String stateCode;
 
   @override
   Override overrideWith(
@@ -143,7 +135,6 @@ class WeatherFutureProvider extends AutoDisposeFutureProvider<Weather> {
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
         cityName: cityName,
-        stateCode: stateCode,
       ),
     );
   }
@@ -155,16 +146,13 @@ class WeatherFutureProvider extends AutoDisposeFutureProvider<Weather> {
 
   @override
   bool operator ==(Object other) {
-    return other is WeatherFutureProvider &&
-        other.cityName == cityName &&
-        other.stateCode == stateCode;
+    return other is WeatherFutureProvider && other.cityName == cityName;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
     hash = _SystemHash.combine(hash, cityName.hashCode);
-    hash = _SystemHash.combine(hash, stateCode.hashCode);
 
     return _SystemHash.finish(hash);
   }
@@ -173,9 +161,6 @@ class WeatherFutureProvider extends AutoDisposeFutureProvider<Weather> {
 mixin WeatherFutureRef on AutoDisposeFutureProviderRef<Weather> {
   /// The parameter `cityName` of this provider.
   String get cityName;
-
-  /// The parameter `stateCode` of this provider.
-  String get stateCode;
 }
 
 class _WeatherFutureProviderElement
@@ -184,8 +169,22 @@ class _WeatherFutureProviderElement
 
   @override
   String get cityName => (origin as WeatherFutureProvider).cityName;
-  @override
-  String get stateCode => (origin as WeatherFutureProvider).stateCode;
 }
+
+String _$getWeatherCardsHash() => r'9aaed8f3334f8284ad1be6afb74b198af857dcfc';
+
+/// See also [getWeatherCards].
+@ProviderFor(getWeatherCards)
+final getWeatherCardsProvider = AutoDisposeProvider<List<WeatherCard>>.internal(
+  getWeatherCards,
+  name: r'getWeatherCardsProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$getWeatherCardsHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef GetWeatherCardsRef = AutoDisposeProviderRef<List<WeatherCard>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.dark
       ),
       themeMode: ThemeMode.dark,
-      home: const HomePage(title: 'Weather'),
+      home: HomePage(title: 'Weather'),
     );
   }
 }
